@@ -1,6 +1,9 @@
 bluedevil
+cmake
 extra-cmake-modules
 fontconfig
+git
+make
 karchive
 kconfig
 kcoreaddons
