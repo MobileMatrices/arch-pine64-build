@@ -1,5 +1,4 @@
 bluedevil
-cask-server
 extra-cmake-modules
 fontconfig
 karchive
@@ -27,7 +26,6 @@ ktexteditor
 kunitconversion
 kwallet
 kwayland
-maui-core
 mauikit-calendar
 mauikit-filebrowsing
 mauikit
