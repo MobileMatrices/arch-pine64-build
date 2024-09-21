@@ -1,1 +1,30 @@
-
+mkdir comp
+cd comp
+git clone https://github.com/Nitrux/maui-core
+git clone https://github.com/Nitrux/cask-server
+git clone
+cd maui-core
+cmake -B build -S $pkgname \
+  -DBUILD_WITH_QT6=ON \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=/usr/lib
+cmake --build build -j4
+cd build
+make install 
+cd ../../cask-server
+cmake -B build -S $pkgname \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=/usr/lib
+cmake --build build -j4
+cd build
+make install
+cd ../../maui-shell
+cmake -B build -S $pkgname \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=/usr/lib
+cmake --build build -j4
+cd build
+make install
