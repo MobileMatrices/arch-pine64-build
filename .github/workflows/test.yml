@@ -1,0 +1,62 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_universal-barebone:
+    strategy:
+      matrix:
+        fail-fast: false
+        include:
+          - device: 'pinetab2'
+            ui: 'barebone'
+          - device: 'pinetab2'
+            ui: 'awesome'
+          - device: 'pinetab2'
+            ui: 'cinnamon'
+          - device: 'pinetab2'
+            ui: 'gnome'
+          - device: 'pinetab2'
+            ui: 'enlightenment'
+          - device: 'pinetab2'
+            ui: 'lxqt'
+          - device: 'pinetab2'
+            ui: 'mate'
+          - device: 'pinetab2'
+            ui: 'pantheon'
+          - device: 'pinetab2'
+            ui: 'sway'
+          - device: 'pinetab2'
+            ui: 'xfce4'
+    runs-on: ubuntu-latest #${{ matrix.platform }#}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      #- name: Install tools
+      #  if#: matrix.platform == #'self-hosted'
+      #  run: |
+      #    sudo pacman -Syu --noconfirm
+      #    sudo pacman -S --noconfirm devtools \
+      #      lsof \
+      #      wget \
+      #      fdisk \
+      #      bsdtar
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lsof wget util-linux libarchive-tools e2fsprogs dosfstools arch-install-scripts fdisk qemu-user-static
+      - name: Run build script
+        run: |
+          sudo chmod u+x ./build.sh
+          sudo ./build.sh -u ${{ matrix.ui }} -d ${{ matrix.device }} -a aarch64 -n alarm -p 123456
+      #- name: Compress Image
+      #  run: |
+      #    mv build/*.img ./archlinux-$#{{ matrix.device }}-$#{{ matrix.ui }}.img
+      #    xz z -9 ./archlinux-$#{{ matrix.device }}-$#{{ matrix.ui }}.img
+      #- name: Upload Image
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: Compressed Image
+      #    path: archlinux-$#{{ matrix.device }}-$#{{ matrix.ui }}.img.xz
