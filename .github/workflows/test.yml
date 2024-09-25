@@ -6,8 +6,8 @@ on:
 jobs:
   build_universal-barebone:
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         include:
           - device: 'pinetab2'
             ui: 'barebone'
